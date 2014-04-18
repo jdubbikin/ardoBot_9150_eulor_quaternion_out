@@ -9,12 +9,20 @@ void initMPU()
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
 
   // wait for ready
-  Serial.println(F("\nSend any character to begin DMP programming and demo: "));
-  while (Serial.available() && Serial.read()); // empty buffer
-  while (!Serial.available());                 // wait for data
-  while (Serial.available() && Serial.read()); // empty buffer again
+  
+  digitalWrite(MPU_INIT_PIN, LOW);
+  //bool standby = 0;
+  while( digitalRead(MPU_INIT_PIN) == HIGH )
+  {
+    digitalWrite(FAIL_PIN, HIGH);
+    Serial.println("Hit go button to begin DMP programming: ");
+    delay(100);
+    digitalWrite(FAIL_PIN, LOW);
+    delay(100);
+  }
+  digitalWrite(GO_PIN, HIGH);
+  digitalWrite(FAIL_PIN, HIGH);
 
-  // load and configure the DMP
   Serial.println(F("Initializing DMP..."));
   devStatus = mpu.dmpInitialize();
   
@@ -31,6 +39,9 @@ void initMPU()
         mpuIntStatus = mpu.getIntStatus();
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
+        digitalWrite(GO_PIN, HIGH);
+        digitalWrite(FAIL_PIN, LOW);
+        
         Serial.println(F("DMP ready! Waiting for first interrupt..."));
         dmpReady = true;
 
@@ -43,6 +54,8 @@ void initMPU()
         // 1 = initial memory load failed
         // 2 = DMP configuration updates failed
         // (if it's going to break, usually the code will be 1)
+        digitalWrite(FAIL_PIN, HIGH);
+        digitalWrite(GO_PIN, LOW);
         Serial.print(F("DMP Initialization failed (code "));
         Serial.print(devStatus);
         Serial.println(F(")"));

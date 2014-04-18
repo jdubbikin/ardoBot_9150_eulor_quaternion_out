@@ -86,8 +86,8 @@ void pid_motorOutput(float angle)
   if(isnan(motorArray[0])){motorArray[0] = 0;}
   if(isnan(motorArray[1])){motorArray[1] = 0;}
   
-  //motorControl1( - motorArray[0] * MOTOR_A_GAIN );
-  //motorControl2( - motorArray[1] * MOTOR_B_GAIN );
+  motorControl1( - motorArray[0] * MOTOR_A_GAIN );
+  motorControl2( - motorArray[1] * MOTOR_B_GAIN );
  
 #ifdef DEBUG_CONTROLER
 

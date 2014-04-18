@@ -53,6 +53,9 @@ MPU6050 mpu;
 
 #define OUTPUT_READABLE_QUATERNION
 #define OUTPUT_READABLE_YAWPITCHROLL
+#define MPU_INIT_PIN          44
+#define GO_PIN                46
+#define FAIL_PIN              47
 
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
@@ -63,6 +66,7 @@ uint16_t fifoCount;     // count of all bytes currently in FIFO
 uint8_t fifoBuffer[64]; // FIFO storage buffer
 
 // orientation/motion vars
+
 Quaternion q;           // [w, x, y, z]         quaternion container
 VectorInt16 aa;         // [x, y, z]            accel sensor measurements
 VectorInt16 aaReal;     // [x, y, z]            gravity-free accel sensor measurements
@@ -127,6 +131,14 @@ void setup()
     Serial.begin(115200);
     Wire.begin();
     
+    pinMode(GO_PIN, OUTPUT);
+    pinMode(FAIL_PIN, OUTPUT);
+    digitalWrite(GO_PIN, HIGH);
+    digitalWrite(FAIL_PIN, HIGH);
+    delay(100);
+    digitalWrite(GO_PIN, LOW);
+    digitalWrite(FAIL_PIN, LOW);
+    
     for(int i = 0; i < 3; i++)
     {
       dataFusion[6][i] = 0.001;
@@ -143,6 +155,8 @@ void setup()
 #endif
       
     }
+    
+    pinMode(MPU_INIT_PIN, INPUT);
 
     initMPU();
     
