@@ -23,9 +23,9 @@ void motorControl1(long value)
     analogWrite(A_spd, abs(value));
     
 #ifdef DEBUG_MOTORS
-    Serial.print(value);Serial.print("\t");
-    Serial.print(digitalRead(A_brk));Serial.print("\t");
-    Serial.print(digitalRead(A_dir));Serial.print("\t");
+    Serial.print(value);Serial.print(",");
+    Serial.print(digitalRead(A_brk));Serial.print(",");
+    Serial.print(digitalRead(A_dir));Serial.print(",");
 #endif
     
   }
@@ -37,9 +37,9 @@ void motorControl1(long value)
     analogWrite(A_spd, abs(value));
     
 #ifdef DEBUG_MOTORS
-    Serial.print(value);Serial.print("\t");
-    Serial.print(digitalRead(A_brk));Serial.print("\t");
-    Serial.print(digitalRead(A_dir));Serial.print("\t");
+    Serial.print(value);Serial.print(",");
+    Serial.print(digitalRead(A_brk));Serial.print(",");
+    Serial.print(digitalRead(A_dir));Serial.print(",");
 #endif
     
   }
@@ -48,9 +48,9 @@ void motorControl1(long value)
     digitalWrite(A_brk, HIGH);
     
 #ifdef DEBUG_MOTORS
-    Serial.print(value);Serial.print("\t");
-    Serial.print(digitalRead(A_brk));Serial.print("\t");
-    Serial.print(digitalRead(A_dir));Serial.print("\t");
+    Serial.print(value);Serial.print(",");
+    Serial.print(digitalRead(A_brk));Serial.print(",");
+    Serial.print(digitalRead(A_dir));Serial.print(",");
 #endif
 
   }
@@ -67,9 +67,9 @@ void motorControl2(long value)
     analogWrite( B_spd, abs(value) );
     
 #ifdef DEBUG_MOTORS
-    Serial.print(value);Serial.print("\t");
-    Serial.print(digitalRead(B_brk));Serial.print("\t");
-    Serial.print(digitalRead(B_dir));Serial.print("\t");
+    Serial.print(value);Serial.print(",");
+    Serial.print(digitalRead(B_brk));Serial.print(",");
+    Serial.print(digitalRead(B_dir));Serial.print(",");
 #endif
     
   }
@@ -80,9 +80,9 @@ void motorControl2(long value)
     analogWrite( B_spd, abs(value) );
     
 #ifdef DEBUG_MOTORS
-    Serial.print(value);Serial.print("\t");
-    Serial.print(digitalRead(B_brk));Serial.print("\t");
-    Serial.print(digitalRead(B_dir));Serial.print("\t");
+    Serial.print(value);Serial.print(",");
+    Serial.print(digitalRead(B_brk));Serial.print(",");
+    Serial.print(digitalRead(B_dir));Serial.print(",");
 #endif
     
   }
@@ -91,9 +91,9 @@ void motorControl2(long value)
     digitalWrite(B_brk, HIGH);
     
 #ifdef DEBUG_MOTORS
-    Serial.print(value);Serial.print("\t");
-    Serial.print(digitalRead(B_brk));Serial.print("\t");
-    Serial.print(digitalRead(B_dir));Serial.print("\t");
+    Serial.print(value);Serial.print(",");
+    Serial.print(digitalRead(B_brk));Serial.print(",");
+    Serial.print(digitalRead(B_dir));Serial.print(",");
 #endif
     
   }

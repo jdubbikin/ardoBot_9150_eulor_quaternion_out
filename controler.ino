@@ -52,13 +52,13 @@ void pidControler(void)
   
 #ifdef DEBUG_CONTROLER
 
-   Serial.print( euler[1] );      Serial.print("\t");
-   Serial.print( command_angle ); Serial.print("\t");
-   Serial.print( angle_error );   Serial.print("\t");
-   Serial.print( pidVector[0] );  Serial.print("\t");
-   Serial.print( pidVector[1] );  Serial.print("\t");
-   Serial.print( pidVector[2] );  Serial.print("\t");
-   Serial.print( pidSum );        Serial.print("\t");
+   Serial.print( euler[1] );      Serial.print(",");
+   Serial.print( command_angle ); Serial.print(",");
+   Serial.print( angle_error );   Serial.print(",");
+   Serial.print( pidVector[0] );  Serial.print(",");
+   Serial.print( pidVector[1] );  Serial.print(",");
+   Serial.print( pidVector[2] );  Serial.print(",");
+   Serial.print( pidSum );        Serial.print(",");
   
 #endif 
 
@@ -86,14 +86,14 @@ void pid_motorOutput(float angle)
   if(isnan(motorArray[0])){motorArray[0] = 0;}
   if(isnan(motorArray[1])){motorArray[1] = 0;}
   
-  motorControl1( - motorArray[0] * MOTOR_A_GAIN );
-  motorControl2( - motorArray[1] * MOTOR_B_GAIN );
+  motorControl1( motorArray[0] * MOTOR_A_GAIN );
+  motorControl2( motorArray[1] * MOTOR_B_GAIN );
  
 #ifdef DEBUG_CONTROLER
 
-  Serial.print( fallTorque ); Serial.print("\t");
-  Serial.print( motorArray[0] ); Serial.print("\t");
-  Serial.print( motorArray[1] ); Serial.print("\t");
+  Serial.print( fallTorque ); Serial.print(",");
+  Serial.print( motorArray[0] ); Serial.print(",");
+  Serial.print( motorArray[1] ); Serial.print(",");
   
 #endif
 

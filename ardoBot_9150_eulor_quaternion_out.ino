@@ -9,7 +9,7 @@
 #define DEBUG
 #define DEBUG_CONTROLER
 // #define DEBUG_KALMAN
-// #define DEBUG_MOTORS
+#define DEBUG_MOTORS
 // #define RUNTIME
 
 // Motor A
@@ -166,25 +166,25 @@ void setup()
     
 #ifdef DEBUG
 
-  Serial.print("iteration\trumTime\tloopTime\t");
+  Serial.print("iteration,rumTime,loopTime,");
 
 #endif
     
 #ifdef DEBUG_KALMAN
 
-    Serial.println("gRate_Y\teuler_psi\tgRate_P\teuler_theta\tgRate_R\teuler_phi\tP_00_Y\tP_01_Y\tP_10_Y\tP_11_Y\tk_0_Y\tK_1_Y\tQ-angle_Y\tQ_gyro_Y\tR_angle_Y\tbias_Y\tfusedAngle_Y\tP_00_P\tP_01_P\tP_10_P\tP_11_P\tk_0_P\tK_1_P\tQ-angle_P\tQ_gyro_P\tR_angle_P\tbias_P\tfusedAngle_P\tP_00_R\tP_01_R\tP_10_R\tP_11_R\tk_0_R\tK_1_R\tQ-angle_R\tQ_gyro_R\tR_angle_R\tbias_R\tfusedAngle_R ");
+    Serial.println("gRate_Y,euler_psi,gRate_P,euler_theta,gRate_R,euler_phi,P_00_Y,P_01_Y,P_10_Y,P_11_Y,k_0_Y,K_1_Y,Q-angle_Y,Q_gyro_Y,R_angle_Y,bias_Y,fusedAngle_Y,P_00_P\tP_01_P,P_10_P,P_11_P,k_0_P,K_1_P,Q-angle_P,Q_gyro_P,R_angle_P,bias_P,fusedAngle_P,P_00_R,P_01_R,P_10_R,P_11_R,k_0_R,K_1_R,Q-angle_R,Q_gyro_R,R_angle_R,bias_R,fusedAngle_R,");
 
 #endif
 
 #ifdef DEBUG_CONTROLER
 
-    Serial.println("P_coef\tI_corf\tD_coef\tPID_coef\teuler_1\tcom_ang\terror\tP_vector[0]\tI_vector[1]\tD_vector[2]\tpid_sum\tDtorque_by_fall\tmotorArray[0]\tmotorArray[1]\t");
+    Serial.println("P_coef,I_corf,D_coef,PID_coef,euler_1,com_ang,error,P_vector[0],I_vector[1],D_vector[2],pid_sum,Dtorque_by_fall,motorArray[0],motorArray[1],");
 
 #endif
 
 #ifdef DEBUG_MOTORS
 
-  Serial.print("MotorA_value\tMotorA_brk\tMotorA_dir\tMotorB_value\tMotorB_brk\tMotorB_dir\t");
+  Serial.print("MotorA_value,MotorA_brk,MotorA_dir,MotorB_value,MotorB_brk,MotorB_dir,");
     
 #endif
 
@@ -199,28 +199,28 @@ void loop()
   deltaT = currentTime - oldTime;
   oldTime = currentTime;
   
-  // checkInputData();
+  checkInputData();
   
 #ifdef DEBUG
 
-  Serial.print(iteration);Serial.print("\t");
-  Serial.print(currentTime);Serial.print("\t");
-  Serial.print(deltaT);Serial.print("\t");
+  Serial.print(iteration);Serial.print(",");
+  Serial.print(currentTime);Serial.print(",");
+  Serial.print(deltaT);Serial.print(",");
   
 #endif
   
   analogReadResolution(12);
   
-  pidCoefVector[0] = analogRead(7) / 4095 ;
-  pidCoefVector[1] = analogRead(8) / 4095 ;
-  pidCoefVector[2] = analogRead(9) / 4095 ;
+  pidCoefVector[0] = analogRead(A7) / 4095 ;
+  pidCoefVector[1] = analogRead(A8) / 4095 ;
+  pidCoefVector[2] = analogRead(A9) / 4095 ;
   
 #ifdef DEBUG_CONTROLER
 
-      Serial.print( pidCoefVector[0] ); Serial.print("\t");
-      Serial.print( pidCoefVector[1] ); Serial.print("\t");
-      Serial.print( pidCoefVector[2] ); Serial.print("\t");
-      Serial.print( pidCoefVector[3] ); Serial.print("\t");
+      Serial.print( pidCoefVector[0] ); Serial.print(",");
+      Serial.print( pidCoefVector[1] ); Serial.print(",");
+      Serial.print( pidCoefVector[2] ); Serial.print(",");
+      Serial.print( pidCoefVector[3] ); Serial.print(",");
   
 #endif
   

@@ -58,23 +58,23 @@
     } 
       
   #ifdef DEBUG_KALMAN
-    Serial.print(iteration);Serial.print("\t");
-    Serial.print(deltaT); Serial.print("\t\t");
+    Serial.print(iteration);Serial.print(",");
+    Serial.print(deltaT); Serial.print(",");
     
     for(int i = 0; i < 3; i++)
     {
-      Serial.print(gRate[i]);Serial.print("\t");
-      Serial.print(euler[i]);Serial.print("\t");
+      Serial.print(gRate[i]);Serial.print(",");
+      Serial.print(euler[i]);Serial.print(",");
     }
     
     for(int i = 0; i < 3; i++)
     {
       for(int j = 0; j < 11; j++)
       {
-        Serial.print(dataFusion[i][j]); Serial.print("\t");
+        Serial.print(dataFusion[i][j]); Serial.print(",");
       }
     }
-    Serial.println();
+    // Serial.println();
     iteration = iteration + 1;
     
   #endif
