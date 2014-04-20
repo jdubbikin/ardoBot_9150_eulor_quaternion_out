@@ -38,9 +38,9 @@
       
 void pidControler(void)
 {  
-  if(isnan(euler[1])){euler[1] = 0;}
+  if(isnan(euler[2])){euler[2] = 0;}
   
-  angle_error = command_angle - euler[1];   
+  angle_error = command_angle - euler[2];   
   
   pidVector[0] = angle_error * pidCoefVector[0];
   pidVector[1] += angle_error * pidCoefVector[1];
@@ -52,7 +52,7 @@ void pidControler(void)
   
 #ifdef DEBUG_CONTROLER
 
-   Serial.print( euler[1] );      Serial.print(",");
+   Serial.print( euler[2] );      Serial.print(",");
    Serial.print( command_angle ); Serial.print(",");
    Serial.print( angle_error );   Serial.print(",");
    Serial.print( pidVector[0] );  Serial.print(",");
@@ -62,7 +62,7 @@ void pidControler(void)
   
 #endif 
 
-  pid_motorOutput( euler[1] + pidSum * pidCoefVector[3] );
+  pid_motorOutput( euler[2] + pidSum * pidCoefVector[3] );
 }
 
 void pid_motorOutput(float angle)
@@ -73,8 +73,8 @@ void pid_motorOutput(float angle)
   //motorArray[0] = 254 - (227.1 * pow( E, -68.14 * torque_by_fall) );
   //motorArray[1] = 250 - (252.8 * pow( E, -43.38 * torque_by_fall) );
   
-  motorArray[0] = A1 * log( B1 * abs(fallTorque) ) / 2;
-  motorArray[1] = A2 * log( B2 * abs(fallTorque) ) / 2;
+  motorArray[0] = A1 * log( B1 * abs(fallTorque) );
+  motorArray[1] = A2 * log( B2 * abs(fallTorque) );
   
   if( euler[1] < 0)
   {

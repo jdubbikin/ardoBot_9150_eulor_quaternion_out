@@ -74,8 +74,6 @@
         Serial.print(dataFusion[i][j]); Serial.print(",");
       }
     }
-    // Serial.println();
-    iteration = iteration + 1;
     
   #endif
   }

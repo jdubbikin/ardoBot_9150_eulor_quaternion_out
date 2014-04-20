@@ -104,6 +104,15 @@ void readFIFOpacket()
     }
 }
 
+/* ================================================================================================ *
+ | Default MotionApps v4.1 48-byte FIFO packet structure:                                           |
+ |                                                                                                  |
+ | [QUAT W][      ][QUAT X][      ][QUAT Y][      ][QUAT Z][      ][GYRO X][      ][GYRO Y][      ] |
+ |   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  |
+ |                                                                                                  |
+ | [GYRO Z][      ][MAG X ][MAG Y ][MAG Z ][ACC X ][      ][ACC Y ][      ][ACC Z ][      ][      ] |
+ |  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47  |
+ * ================================================================================================ */
 void getMPUData()
 {
   // display quaternion values in easy matrix form: w x y z
@@ -113,26 +122,13 @@ void getMPUData()
   mpu.dmpGetGyro(gRate, fifoBuffer);
   mpu.dmpGetEuler(euler, &q);
   
-#ifdef DEBUG_KALMAN
-
-    Serial.print(iteration);Serial.print(",");
-    Serial.print(deltaT); Serial.print(",");
+#ifdef DEBUG_MPU
     
     for(int i = 0; i < 3; i++)
     {
       Serial.print(gRate[i]);Serial.print(",");
       Serial.print(euler[i]);Serial.print(",");
     }
-    
-    for(int i = 0; i < 3; i++)
-    {
-      for(int j = 0; j < 11; j++)
-      {
-        Serial.print(dataFusion[i][j]); Serial.print(",");
-      }
-    }
-    // Serial.println();
-    iteration = iteration + 1;
     
 #endif
   

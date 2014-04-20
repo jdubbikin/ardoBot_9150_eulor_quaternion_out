@@ -6,41 +6,29 @@
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 
-#define DEBUG
-#define DEBUG_CONTROLER
+// #define DEBUG
+// #define DEBUG_CONTROLER
 // #define DEBUG_KALMAN
-#define DEBUG_MOTORS
-// #define RUNTIME
-
-// Motor A
-// Quadratic Fit Ax^2 + Bx + C = PWM
-// A = 3.814E-07
-// B = -1224E-05
-// C = 0.0001071
-// Motor B
-// A = 4.243E-07
-// B = -3.190E-05
-// C = 0.0005630
+// #define DEBUG_MOTORS
+// #define DEBUG_MPU
+#define RUNTIME
 
 // With x beign required torque and y the PWM output. A curve fit 
 // to A*ln(B*x) gives
-// A1 = 53.26
-// B1 = 3411
-// A2 = 47.40
-// B2 = 6223
+// A1 = 53.26, B1 = 3411
+// A2 = 47.40, B2 = 6223
+
 #define BALLANCE_TOLLERANCE  0.01
 #define TORQUE_GRAVITY       0.985125
 #define TORQUE_MOTOR_A       0.68614
 #define TORQUE_MOTOR_B       0.470496
 #define E                    2.7182818285
-#define MOTOR_A_GAIN         3
-#define MOTOR_B_GAIN         3
+#define MOTOR_A_GAIN         0.30
+#define MOTOR_B_GAIN         0.30
 #define A1                   53.26  
 #define B1                   3411
-// #define C1                   0.0001071
 #define A2                   47.40
 #define B2                   6223
-// #define C2                   0.0005630
 
 MPU6050 mpu;
 
@@ -100,7 +88,7 @@ float pidCoefVector[] = { 0.0, 0.0, 0.0, 1.0 };   // { P_coef, I_coef, D_coef, P
  volatile int encoder2Pos;
  
  // Declare the Motor veriables. 
- int motorArray[] = { 0, 0 };
+ float motorArray[] = { 0, 0 };
  
  const int A_dir = 12;
  const int A_spd = 3;
@@ -163,30 +151,13 @@ void setup()
     initMotorControler();
     
     // encoderSetup();
-    
+
 #ifdef DEBUG
 
-  Serial.print("iteration,rumTime,loopTime,");
-
-#endif
-    
-#ifdef DEBUG_KALMAN
-
-    Serial.println("gRate_Y,euler_psi,gRate_P,euler_theta,gRate_R,euler_phi,P_00_Y,P_01_Y,P_10_Y,P_11_Y,k_0_Y,K_1_Y,Q-angle_Y,Q_gyro_Y,R_angle_Y,bias_Y,fusedAngle_Y,P_00_P\tP_01_P,P_10_P,P_11_P,k_0_P,K_1_P,Q-angle_P,Q_gyro_P,R_angle_P,bias_P,fusedAngle_P,P_00_R,P_01_R,P_10_R,P_11_R,k_0_R,K_1_R,Q-angle_R,Q_gyro_R,R_angle_R,bias_R,fusedAngle_R,");
-
-#endif
-
-#ifdef DEBUG_CONTROLER
-
-    Serial.println("P_coef,I_corf,D_coef,PID_coef,euler_1,com_ang,error,P_vector[0],I_vector[1],D_vector[2],pid_sum,Dtorque_by_fall,motorArray[0],motorArray[1],");
-
-#endif
-
-#ifdef DEBUG_MOTORS
-
-  Serial.print("MotorA_value,MotorA_brk,MotorA_dir,MotorB_value,MotorB_brk,MotorB_dir,");
+    printDebugHeader();
     
 #endif
+
 
     initalTime = millis();
     

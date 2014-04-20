@@ -12,7 +12,7 @@ void initMotorControler()
   Serial.println("Motor controler: configured and active");
 }
 
-void motorControl1(long value)
+void motorControl1(float value)
 {
   value = constrain(value, -255, 255);
    
@@ -57,7 +57,7 @@ void motorControl1(long value)
   
 }
 
-void motorControl2(long value)
+void motorControl2(float value)
 {
   
   if(value < 0)
